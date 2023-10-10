@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y \
 
 # install mysql
 RUN wget https://dev.mysql.com/get/mysql-apt-config_0.8.25-1_all.deb \
-    && apt-get install ./mysql-apt-config_0.8.25-1_all.deb \
+    && apt-get install ./mysql-apt-config_0.8.25-1_all.deb -y \
     && rm -f ./mysql-apt-config_0.8.25-1_all.deb \
     && apt-get update \
     && apt-get install mysql-server mysql-client -y
