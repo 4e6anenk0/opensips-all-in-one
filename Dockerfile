@@ -1,4 +1,4 @@
-FROM debian:$DEB_VERSION
+FROM debian:12
 
 LABEL maintainer="Serhii Chebanenko"
 
@@ -7,11 +7,13 @@ ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
 ARG DEB_VERSION=bookworm
 
+ARG MYSQL_VERSION=8.25-1
+
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
 # general dependency
-RUN apt update && apt install -y \
+RUN apt-get update && apt-get install -y \
     apache2 \
     libapache2-mod-php \
     git \
@@ -21,15 +23,22 @@ RUN apt update && apt install -y \
     libfreetype6-dev \
     libxml2-dev \
     libgd-dev \
-    mysql-server \
     expect \
-    curl
+    curl \
+    wget
+
+# install mysql
+RUN wget 'https://dev.mysql.com/get/mysql-apt-config_0.${MYSQL_VERSION}_all.deb' \
+    && sudo apt-get install ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
+    && rm -f ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
+    && sudo apt-get update \
+    && sudo apt-get install mysql-server mysql-client -y
 
 # install opensips
 RUN curl https://apt.opensips.org/opensips-org.gpg -o /usr/share/keyrings/opensips-org.gpg \
     && echo "deb [signed-by=/usr/share/keyrings/opensips-org.gpg] https://apt.opensips.org ${DEB_VERSION} ${OPENSIPS_VERSION}-releases" >/etc/apt/sources.list.d/opensips.list \
     && echo "deb [signed-by=/usr/share/keyrings/opensips-org.gpg] https://apt.opensips.org ${DEB_VERSION} cli-nightly" >/etc/apt/sources.list.d/opensips-cli.list \
-    && apt update && apt upgrade -y \
+    && apt-get update && apt-get upgrade -y \
     && apt install -y opensips opensips-mysql-module opensips-tls-module
 
 COPY src/ocp-apache.conf /etc/apache2/sites-available/opensips.conf
@@ -38,7 +47,7 @@ COPY src/db-init.sh /root/db-init.sh
 
 # install opesips control panel (OCP)
 # PHP dependency
-RUN apt install -y \
+RUN apt-get install -y \
     php \
     php-mysql \
     php-gd \
