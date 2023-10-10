@@ -7,7 +7,6 @@ ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
 ARG DEB_VERSION=bookworm
 
-ARG MYSQL_VERSION=8.25-1
 
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
@@ -28,9 +27,9 @@ RUN apt-get update && apt-get install -y \
     wget
 
 # install mysql
-RUN wget https://dev.mysql.com/get/mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
-    && sudo apt-get install ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
-    && rm -f ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
+RUN wget https://dev.mysql.com/get/mysql-apt-config_0.8.25-1_all.deb \
+    && sudo apt-get install ./mysql-apt-config_0.8.25-1_all.deb \
+    && rm -f ./mysql-apt-config_0.8.25-1_all.deb \
     && sudo apt-get update \
     && sudo apt-get install mysql-server mysql-client -y
 
