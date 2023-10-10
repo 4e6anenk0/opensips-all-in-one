@@ -28,7 +28,7 @@ RUN apt-get update && apt-get install -y \
     wget
 
 # install mysql
-RUN wget 'https://dev.mysql.com/get/mysql-apt-config_0.${MYSQL_VERSION}_all.deb' \
+RUN wget https://dev.mysql.com/get/mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
     && sudo apt-get install ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
     && rm -f ./mysql-apt-config_0.${MYSQL_VERSION}_all.deb \
     && sudo apt-get update \
