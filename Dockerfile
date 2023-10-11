@@ -1,18 +1,18 @@
-FROM php:bullseye
+FROM php:bookworm
 
 LABEL maintainer="Serhii Chebanenko"
 
 # Set version of OpenSIPs to install
 ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
-ARG DEB_VERSION=bullseye
+ARG DEB_VERSION=bookworm
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
 ARG PHP_VERSION=8.2
 
 # PHP dependency
-RUN apt-get install -y php${PHP_VERSION}-{mysql,gd,pear,apcu,curl,cli,common,json,opcache}
+RUN apt-get install -y php-{mysql,gd,pear,apcu,curl,cli,common,json,opcache}
 
 # general dependency
 RUN apt-get update && apt-get install -y \
