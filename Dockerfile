@@ -76,7 +76,7 @@ RUN cd /var/www \
 
 RUN chmod -R 770 /var/lib/mysql \
     && chgrp -R mysql /var/lib/mysql \
-    && system mysql start \
+    && service mysql start \
     && expect -f /root/db-init.sh \
     && mysql --password=mysql -e "GRANT ALL PRIVILEGES ON opensips.* TO opensips@localhost IDENTIFIED BY 'opensipsrw'" \
     && mysql --password=mysql -Dopensips < /var/www/opensips-cp/config/tools/admin/add_admin/ocp_admin_privileges.mysql \
