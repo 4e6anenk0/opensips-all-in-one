@@ -74,7 +74,10 @@ RUN cd /var/www \
     && chown -R www-data:www-data /var/www/opensips-cp/ \
     && cd /var/www/opensips-cp/
 
-RUN systemctl start mysql \
+RUN chmod -R 770 /var/lib/mysql \
+    && chgrp -R mysql /var/lib/mysql \
+    && chmod 755 /etc/rc.d/init.d/mysqld \
+    && system mysql start \
     && expect -f /root/db-init.sh \
     && mysql --password=mysql -e "GRANT ALL PRIVILEGES ON opensips.* TO opensips@localhost IDENTIFIED BY 'opensipsrw'" \
     && mysql --password=mysql -Dopensips < /var/www/opensips-cp/config/tools/admin/add_admin/ocp_admin_privileges.mysql \
