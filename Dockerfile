@@ -74,7 +74,7 @@ RUN cd /var/www \
     && chown -R www-data:www-data /var/www/opensips-cp/ \
     && cd /var/www/opensips-cp/
 
-RUN service mysqld start \
+RUN systemctl start mysqld \
     && expect -f /root/db-init.sh
     
 RUN mysql --password=mysql -e "GRANT ALL PRIVILEGES ON opensips.* TO opensips@localhost IDENTIFIED BY 'opensipsrw'" \
