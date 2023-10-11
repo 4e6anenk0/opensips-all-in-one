@@ -57,15 +57,16 @@ RUN apt-get install -y \
     php-curl
 
 # PHP extension
-RUN && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
+#RUN && docker-php-ext-configure gd --with-freetype --with-jpeg \
+#    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && a2dissite 000-default.conf \
     && a2ensite opensips.conf \
     && a2enmod ssl \
+    && pear channel-update pear.php.net \
     && pear install MDB2 \
-    && pear install MDB2#mysql \
+    && pear install MDB2#mysqli \
     && pear install log
 
 RUN cd /var/www \
