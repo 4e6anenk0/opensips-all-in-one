@@ -57,7 +57,7 @@ RUN apt-get install -y \
     php-curl
 
 # PHP extension
-RUN && docker-php-ext-configure gd --with-freetype --with-jpeg \
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd mysqli pdo pdo_mysql xml
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
