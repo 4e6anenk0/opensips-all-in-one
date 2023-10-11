@@ -1,11 +1,11 @@
-FROM debian:12
+FROM debian:11
 
 LABEL maintainer="Serhii Chebanenko"
 
 # Set version of OpenSIPs to install
 ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
-ARG DEB_VERSION=bookworm
+ARG DEB_VERSION=bullseye
 
 
 # Set version of OpenSIPs Control Panel
