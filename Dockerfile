@@ -1,4 +1,4 @@
-FROM debian:11
+FROM php:bullseye
 
 LABEL maintainer="Serhii Chebanenko"
 
@@ -6,8 +6,6 @@ LABEL maintainer="Serhii Chebanenko"
 ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
 ARG DEB_VERSION=bullseye
-
-
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
@@ -48,11 +46,9 @@ COPY src/db-init.sh /root/db-init.sh
 # install opesips control panel (OCP)
 # PHP dependency
 RUN apt-get install -y \
-    php \
     php-mysql \
     php-gd \
     php-pear \
-    php-cli \
     php-apcu \
     php-curl
 
@@ -80,7 +76,6 @@ RUN service mysql start \
     && mysql --password=mysql -Dopensips -e "INSERT INTO ocp_admin_privileges (username,password,ha1,available_tools,permissions) values ('admin','admin',md5('admin:admin'),'all','all');" \
     && mysql --password=mysql -Dopensips < /var/www/opensips-cp/config/tools/system/smonitor/tables.mysql \
     && cp /var/www/opensips-cp/config/tools/system/smonitor/opensips_stats_cron /etc/cron.d/
-
 
 
 # Set public ports and startup script
