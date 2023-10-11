@@ -9,6 +9,18 @@ ARG DEB_VERSION=bullseye
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
+# PHP dependency
+RUN apt-get install -y \
+    php-mysql \
+    php-gd \
+    php-pear \
+    php-apcu \
+    php-curl \
+    php-cli \
+    php-common \
+    php-json \
+    php-opcache
+
 # general dependency
 RUN apt-get update && apt-get install -y \
     apache2 \
@@ -44,13 +56,6 @@ COPY src/etc-opensips/opensipsctlrc /etc/opensips/opensipsctlrc
 COPY src/db-init.sh /root/db-init.sh
 
 # install opesips control panel (OCP)
-# PHP dependency
-RUN apt-get install -y \
-    php-mysql \
-    php-gd \
-    php-pear \
-    php-apcu \
-    php-curl
 
 # PHP extension
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
