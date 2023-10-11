@@ -75,8 +75,9 @@ RUN cd /var/www \
     && cd /var/www/opensips-cp/
 
 RUN service mysqld start \
-    && expect -f /root/db-init.sh \
-    && mysql --password=mysql -e "GRANT ALL PRIVILEGES ON opensips.* TO opensips@localhost IDENTIFIED BY 'opensipsrw'" \
+    && expect -f /root/db-init.sh
+    
+RUN mysql --password=mysql -e "GRANT ALL PRIVILEGES ON opensips.* TO opensips@localhost IDENTIFIED BY 'opensipsrw'" \
     && mysql --password=mysql -Dopensips < /var/www/opensips-cp/config/tools/admin/add_admin/ocp_admin_privileges.mysql \
     && mysql --password=mysql -Dopensips -e "INSERT INTO ocp_admin_privileges (username,password,ha1,available_tools,permissions) values ('admin','admin',md5('admin:admin'),'all','all');" \
     && mysql --password=mysql -Dopensips < /var/www/opensips-cp/config/tools/system/smonitor/tables.mysql \
