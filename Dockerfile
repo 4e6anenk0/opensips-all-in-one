@@ -9,17 +9,11 @@ ARG DEB_VERSION=bullseye
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
+ARG PHP_VERSION=7.4
+
 # PHP dependency
 RUN apt-get install -y \
-    php-mysql \
-    php-gd \
-    php-pear \
-    php-apcu \
-    php-curl \
-    php-cli \
-    php-common \
-    php-json \
-    php-opcache
+    php${PHP_VERSION}-{mysql,gd,pear,apcu,curl,cli,common,json,opcache}
 
 # general dependency
 RUN apt-get update && apt-get install -y \
