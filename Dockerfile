@@ -1,18 +1,28 @@
-FROM debian:bookworm
+FROM php:bullseye
 
 LABEL maintainer="Serhii Chebanenko"
 
 # Set version of OpenSIPs to install
 ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
-ARG DEB_VERSION=bookworm
+ARG DEB_VERSION=bullseye
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
-ARG PHP_VERSION=8.2
+ARG PHP_VERSION=7.4
 
 # PHP dependency
-RUN apt-get install -y php-{mysql,gd,pear,apcu,curl,cli,common,json,opcache}
+RUN apt-get install -y \
+    php \
+    php-mysql \
+    php-gd \
+    php-pear \
+    php-apcu \
+    php-curl \
+    php-cli \
+    php-common \
+    php-json \
+    php-opcache
 
 # general dependency
 RUN apt-get update && apt-get install -y \
@@ -51,8 +61,8 @@ COPY src/db-init.sh /root/db-init.sh
 # install opesips control panel (OCP)
 
 # PHP extension
-#RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-#    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && a2dissite 000-default.conf \
