@@ -1,4 +1,4 @@
-FROM php:bookworm
+FROM debian:bookworm
 
 LABEL maintainer="Serhii Chebanenko"
 
@@ -51,8 +51,8 @@ COPY src/db-init.sh /root/db-init.sh
 # install opesips control panel (OCP)
 
 # PHP extension
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
+#RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+#    && docker-php-ext-install gd mysqli pdo pdo_mysql xml
 
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf \
     && a2dissite 000-default.conf \
