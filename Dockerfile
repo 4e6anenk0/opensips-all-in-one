@@ -1,11 +1,11 @@
-FROM php:bullseye
+FROM debian:12
 
 LABEL maintainer="Serhii Chebanenko"
 
 # Set version of OpenSIPs to install
 ARG OPENSIPS_VERSION=3.3
 # Set the Debian named version
-ARG DEB_VERSION=bullseye
+ARG DEB_VERSION=bookworm
 # Set version of OpenSIPs Control Panel
 ARG OCP_VERSION=9.3.3
 
